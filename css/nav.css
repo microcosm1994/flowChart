@@ -1,0 +1,7 @@
+.nav {
+width: 200px;
+height: 100%;
+border-right: 1px solid #dddddd;
+line-height: 30px;
+text-align: center;
+}

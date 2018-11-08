@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!--<link rel="shortcut icon" href="ico/favicon.ico" />-->
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/aldwhite.css" rel="stylesheet" type="text/css" />
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<link href="css/nav.css" rel="stylesheet" type="text/css" />
+<link href="css/tab.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery/jquery-2.js"></script>
+<script type="text/javascript" src="js/jquery/bootstrap.js"></script>
+<script type="text/javascript" src="js/go-debug.js"></script>
+<script type="text/javascript" src="js/mt/mt.js"></script>
+<script type="text/javascript" src="js/mt/prototype.js"></script>
+<script type="text/javascript" src="js/mt/Colors.js"></script>
+<script type="text/javascript" src="js/mt/Tab.js"></script>
+<script type="text/javascript" src="js/mt/Dialog.js"></script>
+<script type="text/javascript" src="js/go/faultTree/contextMenu.js"></script>
+<script type="text/javascript" src="js/go/faultTree/template.js"></script>
+<script type="text/javascript" src="js/go/faultTree/diagram.js"></script>
+<script type="text/javascript" src="js/go/control/add.js"></script>
+<script type="text/javascript" src="js/go/control/del.js"></script>
+<script type="text/javascript" src="js/go/control/get.js"></script>
+<script type="text/javascript" src="js/go/control/set.js"></script>
+<script type="text/javascript" src="js/go/model.js"></script>
+<script type="text/javascript" src="js/tab.js"></script>
+<script type="text/javascript" src="js/go/diagram/treeView.js"></script>
+</head>
+<body style="display: flex;">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title Heading" id="myModalLabel" title="Modal title">
+						<span id="h_title_id"></span>
+					</h4>
+				</div>
+				<form class="modal-body form-horizontal" id="ModalBody" role="form"></form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" id="btnsave" class="btn btn-success" onclick="dialog.ok()">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--<div id="treeView" class="nav"></div>-->
+	<div style="flex-grow: 1;">
+		<div class="nav-box">
+      <ul class="tab1">
+        <li onclick="setModelFromJson(myDiagram)">视图</li>
+        <li onclick="getModelToJson(myDiagram);">源码</li>
+        <li></li>
+      </ul>
+			<div class="btn-box">
+        <div class="nav-btn">新建</div>
+        <div class="nav-btn">保存</div>
+        <div class="nav-btn">截图</div>
+        <div class="nav-btn">帮助</div>
+      </div>
+		</div>
+		<div class="tab2">
+			<div id="myDiagramDiv"></div>
+			<div>
+				<textarea id="mySavedModel"></textarea>
+			</div>
+			<div></div>
+		</div>
+	</div>
+	<input type="hidden" id="bg" value="blue" />
+</body>
+</html>

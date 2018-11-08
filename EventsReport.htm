@@ -1,0 +1,80 @@
+<link href="css/sub.css" rel="stylesheet" />
+<form action="/Report/EventsReport" method="post">
+	<div class="panel panel-success col-xs-10 col-xs-offset-1" id="div_report_id">
+		<div class="panel-heading">
+			<h2 id="report_header_id">Events Report</h2>
+		</div>
+		<div class="panel-body">
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th>Description</th>
+						<th>Type</th>
+						<th>Failure Rate</th>
+					</tr>
+				</thead>
+				<tr>
+					<td>CPE-NEA</td>
+					<td>Computing Part error leading to total non extension of all spoilers</td>
+					<td>External</td>
+					<td>λ=2.570E-12</td>
+				</tr>
+				<tr>
+					<td>SPOIL-2OUT-NEXT</td>
+					<td>Non extension of both outer multifunctional spoilers (actuator failures or control unit failures or loss of hydraulic supply)</td>
+					<td>Evident</td>
+					<td>λ=5.000E-05</td>
+				</tr>
+				<tr>
+					<td>SPOIL-2INN-NEXT</td>
+					<td>Non extension of both inner multifunctional spoilers (actuator failures or control unit failures or loss of hydraulic supply)</td>
+					<td>Evident</td>
+					<td>λ=5.000E-05</td>
+				</tr>
+				<tr>
+					<td>SPOIL-2GRND-NEXT</td>
+					<td>Non extension of both ground spoilers (actuator failures or control unit failures or loss of hydraulic supply)</td>
+					<td>Evident</td>
+					<td>λ=6.200E-05</td>
+				</tr>
+				<tr>
+					<td>HYD-S1-LOSS</td>
+					<td>Loss of Hydraulic System 1</td>
+					<td>External</td>
+					<td>λ=9.800E-08</td>
+				</tr>
+				<tr>
+					<td>HYD-S2-LOSS</td>
+					<td>Loss of Hydraulic system 2</td>
+					<td>External</td>
+					<td>λ=9.800E-08</td>
+				</tr>
+				<tr>
+					<td>SPBR-LVR-JAM</td>
+					<td>Jam of speedbrake lever</td>
+					<td>Evident</td>
+					<td>λ=1.200E-09</td>
+				</tr>
+				<tr>
+					<td>SPBR-LVR-FRACT</td>
+					<td>Fracture of speedbrake lever</td>
+					<td>Evident</td>
+					<td>λ=1.500E-09</td>
+				</tr>
+				<tr>
+					<td>TRNSDC-CH1-NSIG</td>
+					<td>No output/ wrong output from all transducer sensors channel 1</td>
+					<td>Evident</td>
+					<td>λ=2.000E-08</td>
+				</tr>
+				<tr>
+					<td>TRNSDC-CH2-NSIG</td>
+					<td>No output/ wrong output from all transducer sensors channel 2</td>
+					<td>Latent</td>
+					<td>λ=2.000E-08 T=1000h</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,18 @@
+.header h1 {
+  width: 200px;
+  height: 60px;
+  line-height: 60px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #fff;
+  z-index: 9;
+  text-align: center;
+}
+.header .el-menu {
+  padding-left: 200px;
+}
+.header .el-menu .el-submenu {
+  float: right;
+}
+/*# sourceMappingURL=header.css.map */

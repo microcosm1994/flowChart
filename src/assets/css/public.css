@@ -1,0 +1,41 @@
+html,
+body {
+  height: 100vh;
+}
+html,
+body,
+div,
+input,
+ul,
+li,
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+footer,
+header {
+  margin: 0;
+  padding: 0;
+  font-family: 'Microsoft YaHei';
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+/**
+*header样式
+*/
+.el-header {
+  padding: 0;
+}
+/**
+*导航样式
+*/
+/*# sourceMappingURL=public.css.map */

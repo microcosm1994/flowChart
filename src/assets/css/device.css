@@ -1,0 +1,28 @@
+.box-card .header-box {
+  width: 100%;
+}
+.box-card .header-box .title {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+.box-card .header-box .search-box {
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+.box-card .header-box .search-box .el-select {
+  width: 120px;
+}
+.box-card .header-box .search-box .el-select .el-input {
+  background: #ffffff !important;
+}
+.box-card .header-box .search-box .input-with-select .el-input-group__prepend {
+  background-color: #fff !important;
+}
+.box-card .header-box .select-box {
+  width: 100%;
+  text-align: center;
+}
+/*# sourceMappingURL=device.css.map */

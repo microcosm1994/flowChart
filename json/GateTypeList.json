@@ -1,0 +1,78 @@
+{
+	"List": [
+		{
+			"EnumBOName": "OR gate - output event occurs if any of the input events occurs",
+			"EnumValue": 0,
+			"EnumName": "OR"
+		},
+		{
+			"EnumBOName": "AND gate - output event occurs only when all the input events occurs simultaneously",
+			"EnumValue": 1,
+			"EnumName": "AND"
+		},
+		{
+			"EnumBOName": "K-out-of-N gate - output event occurs if any K or more of the input events occur",
+			"EnumValue": 2,
+			"EnumName": "K/N"
+		}
+	],
+	"FTCalcTypeList": [
+		{
+			"EnumBOName": null,
+			"EnumValue": 3,
+			"EnumName": "Unavailability at time t Q(t)"
+		},
+		{
+			"EnumBOName": null,
+			"EnumValue": 7,
+			"EnumName": "Steady-state mean unavailability Q"
+		}
+	],
+	"ProbCalcModesList": [
+		{
+			"EnumBOName": "The reliability data represents the probability  that the component is not able to perform  its function upon request. ",
+			"EnumValue": 0,
+			"EnumName": "Constant Probability"
+		},
+		{
+			"EnumBOName": "Calculation by equation P=λ*t, where  λ – failure rate (1/hour);  t – failure exposure time (hours)",
+			"EnumValue": 1,
+			"EnumName": "Evident, P=λ*t"
+		},
+		{
+			"EnumBOName": "Calculation by equation P=λ*tm, where  λ – failure rate (1/hour);  tm – failure exposure time (hours)",
+			"EnumValue": 2,
+			"EnumName": "Const.mission time, P=λ*tm"
+		},
+		{
+			"EnumBOName": "Calculation by equation P(t) = 1-(1-q)*exp(-λ*t), where λ – failure rate (1/hour); t – failure exposure time (hours)",
+			"EnumValue": 7,
+			"EnumName": "Unrepairable, P=1-(1-q)*exp(-λ*t)"
+		},
+		{
+			"EnumBOName": "Calculation by equation P(t)=(λ/(λ+µ))*[1–exp(-(λ+µ)t)], P=λ/(λ+µ), where λ – failure rate (1/hour); µ - repair rate (1/MTTR) per hour",
+			"EnumValue": 9,
+			"EnumName": "Repairable"
+		},
+		{
+			"EnumBOName": "Calculation by equation P=λ*T, where λ – failure rate (1/hour); T – Inspection interval (hours)",
+			"EnumValue": 3,
+			"EnumName": "Latent, P=λ*T"
+		},
+		{
+			"EnumBOName": "Calculation by equation P=λ*T/2, where λ – failure rate (1/hour); T – Inspection interval (hours)",
+			"EnumValue": 4,
+			"EnumName": "Latent, P=λ*T/2"
+		},
+		{
+			"EnumBOName": "Calculation by equation  P(t) = 1-e^(-λ*T)/2, where λ – failure rate (1/hour); T – Inspection interval (hours)",
+			"EnumValue": 5,
+			"EnumName": "Latent,Life-time, P=1-e^(-λ*T)"
+		},
+		{
+			"EnumBOName": "not in use",
+			"EnumValue": 10,
+			"EnumName": "Latent repairable"
+		}
+	]
+}

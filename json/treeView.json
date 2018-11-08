@@ -1,0 +1,166 @@
+{
+	"modelData": {
+		"position": "-5 -5"
+	},
+	"nodeDataArray": [
+		{
+			"title": "树",
+			"key": 1
+		},
+		{
+			"title": "新建",
+			"parent": 1,
+			"key": 2
+		},
+		{
+			"title": "打开",
+			"parent": 1,
+			"key": 3
+		},
+		{
+			"title": "属性",
+			"parent": 1,
+			"key": 4
+		},
+		{
+			"title": "导出并下载",
+			"parent": 1,
+			"key": 5
+		},
+		{
+			"title": "上传并导入",
+			"parent": 1,
+			"key": 6
+		},
+		{
+			"title": "png",
+			"parent": 5,
+			"key": 7
+		},
+		{
+			"title": "json",
+			"parent": 5,
+			"key": 8
+		},
+		{
+			"title": "json",
+			"parent": 6,
+			"key": 9
+		},
+		{
+			"title": "节点",
+			"key": 10
+		},
+		{
+			"title": "新建",
+			"parent": 10,
+			"key": 11
+		},
+		{
+			"title": "删除",
+			"parent": 10,
+			"key": 12
+		},
+		{
+			"title": "修改",
+			"parent": 10,
+			"key": 13
+		},
+		{
+			"title": "查询",
+			"parent": 10,
+			"key": 14
+		},
+		{
+			"title": "复制",
+			"parent": 10,
+			"key": 15
+		},
+		{
+			"title": "粘贴",
+			"parent": 10,
+			"key": 16
+		},
+		{
+			"title": "分析",
+			"key": 17
+		},
+		{
+			"title": "模拟参数设置",
+			"parent": 18,
+			"key": 21
+		},
+		{
+			"title": "数据完整性",
+			"parent": 17,
+			"key": 18
+		},
+		{
+			"title": "概率计算分析",
+			"parent": 18,
+			"key": 19
+		},
+		{
+			"title": "可靠性模拟",
+			"parent": 18,
+			"key": 20
+		},
+		{
+			"title": "停止",
+			"parent": 18,
+			"key": 22
+		},
+		{
+			"title": "模拟分析报告",
+			"parent": 18,
+			"key": 23
+		},
+		{
+			"title": "随机数检验",
+			"parent": 18,
+			"key": 24
+		},
+		{
+			"title": "失效数据分析",
+			"parent": 18,
+			"key": 25
+		},
+		{
+			"title": "节点列表",
+			"key": 26
+		},
+		{
+			"title": "视图",
+			"key": 27
+		},
+		{
+			"title": "缩放",
+			"parent": 27,
+			"key": 28
+		},
+		{
+			"title": "正常",
+			"parent": 28,
+			"key": 29
+		},
+		{
+			"title": "满屏",
+			"parent": 28,
+			"key": 30
+		},
+		{
+			"title": "网格",
+			"parent": 27,
+			"key": 31
+		},
+		{
+			"title": "恢复",
+			"parent": 27,
+			"key": 32
+		},
+		{
+			"title": "登录",
+			"key": 32
+		}
+	]
+}
