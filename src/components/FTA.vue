@@ -1,7 +1,21 @@
 <template>
   <el-tabs type="card" size="small">
     <el-tab-pane label="视图">
-      <div id="faultTree" style="width:100%;height:600px;"></div>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <h1 style="text-align: center">故障树编辑</h1>
+        </el-col>
+        <el-col :span="12">
+          <div style="text-align: center">
+            <el-button icon="el-icon-refresh" size="mini" type="primary">刷新</el-button>
+            <el-button icon="el-icon-plus" size="mini" type="primary">新建</el-button>
+            <el-button size="mini" type="primary">保存</el-button>
+            <el-button size="mini" type="primary">截图</el-button>
+            <el-button icon="el-icon-info" size="mini" type="primary">帮助</el-button>
+          </div>
+        </el-col>
+      </el-row>
+      <div id="faultTree" :style="{width: '100%', height: height + 'px', 'margin-top': '10px'}"></div>
     </el-tab-pane>
     <el-tab-pane label="源码">
       <el-row :gutter="20">
@@ -28,7 +42,7 @@
           </div>
         </el-col>
       </el-row>
-      <div id="jsoneditor" style="width: 100%;height:500px;margin-top: 10px;"></div>
+      <div id="jsoneditor" :style="{width: '100%', height: height + 'px', 'margin-top': '10px'}"></div>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -38,6 +52,7 @@
     name: 'FTA',
     data () {
       return {
+        height: 0,
         Editor: null,
         editorMode: 'text',
         code: '',
@@ -48,10 +63,19 @@
         this.Editor.setMode(n) // 切换编辑器模式
       }
     },
+    created () {
+      this.height = this.setHeight(155)
+      console.log(this.height);
+    },
     mounted () {
       this.init()
     },
     methods: {
+      // 设置高度
+      setHeight (h) {
+        const windowHeight = document.body.clientHeight
+        return windowHeight - h - 0
+      },
       // 初始化流程图
       init () {
         // 获取流程图数据
