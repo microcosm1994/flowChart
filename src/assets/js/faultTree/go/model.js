@@ -9,8 +9,7 @@ export default {
         diagram.model = go.Model.fromJson(model);
         break;
       case 'object':
-        if (!Model)
-          Model = go.GraphLinksModel;
+        if (!Model) Model = go.GraphLinksModel;
         diagram.model = go.GraphObject.make(Model, model);
         break;
       case 'undefined':
@@ -24,9 +23,10 @@ export default {
         return;
     }
     diagram.initialPosition = go.Point.parse(diagram.model.modelData.position);// load position
+    return diagram
   },
   iniModelFromJson: function (diagram, model, Model) {
-    this.modelFromJson(diagram, model, Model)
+    return this.modelFromJson(diagram, model, Model)
   },
   setModelFromJson: function (diagram, model, Model) {
     // console.log(arguments);
@@ -35,17 +35,10 @@ export default {
     this.modelFromJson(diagram, model, Model);
     // diagram.commitTransaction('setModelFromJson');
   },
-  getModelToJson: function (diagram, element) {
+  getModelToJson: function (diagram) {
     diagram.isModified = false;
     diagram.model.modelData.position = go.Point.stringify(diagram.position);// save position
-    let ret = diagram.modelJson();
-    element = mt.$(element);
-    if (!element) {
-      element = mt.$(elementDefault);
-    }
-    if (element) {
-      element.value = ret;
-    }
-    return ret;
+    console.log(diagram);
+    return diagram.modelJson();
   }
 }

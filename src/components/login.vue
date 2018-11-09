@@ -113,7 +113,7 @@ export default {
               if (redirect) {
                 self.$router.push({path: redirect})
               } else {
-                self.$router.push({path: '/Home'})
+                self.$router.push({path: '/'})
               }
             } else {
               console.log('用户名密码错误')

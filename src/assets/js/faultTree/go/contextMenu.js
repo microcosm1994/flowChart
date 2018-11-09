@@ -1,4 +1,5 @@
 import go from 'gojs'
+import dialog from '../mt/Dialog'
 
 export default function (diagram, cfg) {
   const $ = go.GraphObject.make
@@ -8,6 +9,7 @@ export default function (diagram, cfg) {
     if (cfg.editable) {
       ret.add($('ContextMenuButton', $(go.TextBlock, '计算'), {
         click : function(e, obj) {
+          console.log(obj);
           dialog.compute(obj.part);
         }
       }))

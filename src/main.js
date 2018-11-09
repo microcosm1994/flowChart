@@ -7,13 +7,18 @@ import element from 'element-ui'
 import cookies from 'vue-cookies'
 import {$axios} from './assets/js/interceptors'
 import store from '@/store/index'
+import diagrams from './assets/js/faultTree/index'
+import jsoneditor from 'jsoneditor'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'jsoneditor/dist/jsoneditor.min.css'
 import './assets/css/public.css'
 import './assets/css/icon/iconfont.css'
 
 Vue.use(element)
 Vue.prototype.$http = $axios
 Vue.prototype.$cookies = cookies
+Vue.prototype.$diagrams = diagrams
+Vue.prototype.$jsoneditor = jsoneditor
 Vue.config.productionTip = false
 
 // 登录检测
@@ -27,8 +32,7 @@ router.beforeEach((to, from, next) => {
         message: '用户未登录',
         type: 'info'
       })
-      // next({path: '/login'})
-      next()
+      next({path: '/login'})
     }
   } else {
     next()
