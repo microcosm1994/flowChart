@@ -1,8 +1,10 @@
 (function(w) {
-	function Colors() {
+	function Weight() {
 	}
-	Colors.prototype = {
-		'0.0' : [ '#FF0000','#00FF00'],
+	Weight.prototype = {
+		weight0 : [ '1.0', '2.0','3.0','4.0','5.0' ],
+        weight1 : [ '1.0', '2.0','3.0','4.0','5.0' ],
+        weight2 : [ '1.0', '2.0','3.0','4.0','5.0' ],
 		$ : function(o) {
       console.log(o);
       if (typeof o == 'object') {
@@ -12,7 +14,7 @@
 				o = this[o];
 			}
 			if (typeof o == 'undefined') {
-				o = this.red;
+				o = this.weight0;
 			}
 			if (mt.isArray(o)) {
 				// console.log(o);
@@ -24,5 +26,5 @@
 			return o;
 		}
 	};
-	w.colors = new Colors();
+	w.weight = new Weight();
 })(window);

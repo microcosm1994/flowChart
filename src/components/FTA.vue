@@ -44,28 +44,62 @@
       </el-row>
       <div id="jsoneditor" :style="{width: '100%', height: height + 'px', 'margin-top': '10px'}"></div>
     </el-tab-pane>
+    <!--弹框-->
+    <!--使用v-if是为了销毁动态组件-->
+    <el-dialog
+      v-if="modal.switch"
+      :title="modal.title"
+      :visible.sync="modal.switch"
+      width="40%"
+      center>
+      <component v-bind:is="modal.name"></component>
+    </el-dialog>
   </el-tabs>
 </template>
 
 <script>
+  import compute from './modal/compute'
+  import addNode from './modal/addNode'
+  import addLink from './modal/addLink'
+  import put from './modal/put'
   export default {
     name: 'FTA',
     data () {
       return {
-        height: 0,
-        Editor: null,
-        editorMode: 'text',
-        code: '',
-      }
-    },
-    watch: {
-      editorMode: function (n, o) {
-        this.Editor.setMode(n) // 切换编辑器模式
+        height: 0, // 高度
+        Editor: null, // json编辑器实例
+        editorMode: 'text', // 编辑器模式
+        code: '', // json源码
       }
     },
     created () {
+      // 在创建vue实例时获取高度
       this.height = this.setHeight(155)
-      console.log(this.height);
+    },
+    computed: {
+      modal: function () {
+        return this.$store.state.modal
+      },
+      sourceCode: function () {
+        return this.$store.state.sourceCode
+      }
+    },
+    watch: {
+      // 监听编辑器的模式
+      editorMode: function (n, o) {
+        this.Editor.setMode(n) // 切换编辑器模式
+      },
+      // 监听流程图json数据的变化
+      sourceCode: function (n, o) {
+        // 更新json编辑器中的数据
+        this.Editor.update(n)
+      }
+    },
+    components: {
+      compute,
+      addNode,
+      addLink,
+      put,
     },
     mounted () {
       this.init()
@@ -81,14 +115,21 @@
         // 获取流程图数据
         this.$http.get('http://localhost:8080/static/json/faultTree.json').then((response) => {
           if (response.status === 200) {
-            let jsonData = response.data
+            let jsonData = response.data.d
+            // 创建流程图实例
             let diagram = this.$diagrams.diagram('faultTree')
+            // 初始化流程图
             diagram = this.$diagrams.model.iniModelFromJson(diagram, jsonData)
-            this.code = diagram.modelData()
-            this.editor(this.code, this.editorMode)
+            // 保存json数据到vuex
+            this.$store.commit('sourceCode', diagram.modelData())
+            // Json编辑器
+            this.editor(this.sourceCode, this.editorMode)
+            // 保存实力对象到vuex
+            this.$store.commit('diagram', diagram)
           }
         })
       },
+      // Json编辑器
       editor (json, mode) {
         let container = document.getElementById('jsoneditor')
         let options = {

@@ -93,7 +93,8 @@
       diagram.commitTransaction('copyTree');
     }
   };
-  diagram.copyChildren = function(src, p, chainKeySet) {// top for no repeat
+  diagram.copyChildren = function(src, p, chainKeySet) {
+    // top for no repeat
     // console.log(arguments);
     let a = [];
     let it = src.findTreeChildrenNodes();// get children links

@@ -430,7 +430,7 @@ try {
 					return JSON.stringify(d);
 				}
 			},
-			post : function(l, o, d, e) {// url, onok, data, onerror
+			post : function(l, o, d, e, h) {// url, onok, data, onerror, header
 				try {
 					let t = this.ajax();
 					if (!t)
@@ -439,7 +439,11 @@ try {
 					t.e = e;
 					t.c = mt.stringify(d);
 					t.open('POST', mt.url(l), true);
-					// t.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+					if (typeof h == 'object') {
+						for (n in h) {
+							t.setRequestHeader(n, h[n]);
+						}
+					}
 					mt._e('readystatechange', ready, t);
 					t.send(t.c);
 				} catch (e) {

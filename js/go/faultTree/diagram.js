@@ -6,8 +6,8 @@ let myDiagram;
 	// def digram with node template
 	let diagram = myDiagram = $(go.Diagram, id, {
 		initialContentAlignment : go.Spot.Center,
-		// initialAutoScale: go.Diagram.UniformToFill,
-		// autoScale: go.Diagram.UniformToFill,
+		initialAutoScale : go.Diagram.UniformToFill,
+		// autoScale : go.Diagram.UniformToFill,//禁止缩放
 		layout : $(go.TreeLayout, {
 			angle : 90,// display from left to right
 			// alternateAngle : 90,
@@ -38,8 +38,14 @@ let myDiagram;
 			stroke : 'lightgray'
 		}));
 	}
-	w.$.getJSON('./json/faultTree.json', null, function(jsonData) {
-		iniModelFromJson(diagram, jsonData);
+  console.log(mt.$c('t'));
+  mt.post('/9001/api/tree/load', function(r) {
+		o = JSON.parse(r);
+		iniModelFromJson(diagram, o.d);
+	}, null, function(e) {
+		console.log(e);
+	}, {
+		t: mt.$c('t')
 	});
 	w.dialog = new Dialog(diagram);
 }).push(window, {

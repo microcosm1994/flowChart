@@ -8,6 +8,7 @@ function contextMenu(diagram, cfg) {
 		if (cfg.editable) {
 			ret.add($('ContextMenuButton', $(go.TextBlock, '计算'), {
 				click : function(e, obj) {
+          console.log(obj);
           dialog.compute(obj.part);
 				}
 			}));
