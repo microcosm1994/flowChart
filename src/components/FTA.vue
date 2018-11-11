@@ -7,10 +7,10 @@
         </el-col>
         <el-col :span="12">
           <div style="text-align: center">
-            <el-button icon="el-icon-refresh" size="mini" type="primary">刷新</el-button>
+            <el-button @click="viewRefresh" icon="el-icon-refresh" size="mini" type="primary">刷新</el-button>
             <el-button icon="el-icon-plus" size="mini" type="primary">新建</el-button>
-            <el-button size="mini" type="primary">保存</el-button>
-            <el-button size="mini" type="primary">截图</el-button>
+            <el-button @click="save" size="mini" type="primary">保存</el-button>
+            <el-button @click="screenshot" size="mini" type="primary">截图</el-button>
             <el-button icon="el-icon-info" size="mini" type="primary">帮助</el-button>
           </div>
         </el-col>
@@ -37,7 +37,7 @@
                 <el-dropdown-item command="code">code</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-            <el-button @click="refresh" size="mini" icon="el-icon-refresh" type="primary">刷新</el-button>
+            <el-button @click="codeRefresh" size="mini" icon="el-icon-refresh" type="primary">刷新</el-button>
             <el-button @click="save" size="mini" type="primary">保存</el-button>
           </div>
         </el-col>
@@ -62,10 +62,14 @@
   import addNode from './modal/addNode'
   import addLink from './modal/addLink'
   import put from './modal/put'
+  import get from './modal/get'
+  import remove from './modal/remove'
+  import screenshot from './modal/screenshot'
   export default {
     name: 'FTA',
     data () {
       return {
+        diagram: null, // 流程图实例
         height: 0, // 高度
         Editor: null, // json编辑器实例
         editorMode: 'text', // 编辑器模式
@@ -100,6 +104,9 @@
       addNode,
       addLink,
       put,
+      get,
+      remove,
+      screenshot
     },
     mounted () {
       this.init()
@@ -117,14 +124,15 @@
           if (response.status === 200) {
             let jsonData = response.data.d
             // 创建流程图实例
-            let diagram = this.$diagrams.diagram('faultTree')
+            let diagram = new this.$diagrams('faultTree').diagram
             // 初始化流程图
-            diagram = this.$diagrams.model.iniModelFromJson(diagram, jsonData)
+            diagram = diagram.init(diagram, jsonData)
             // 保存json数据到vuex
             this.$store.commit('sourceCode', diagram.modelData())
             // Json编辑器
             this.editor(this.sourceCode, this.editorMode)
             // 保存实力对象到vuex
+            this.diagram = diagram
             this.$store.commit('diagram', diagram)
           }
         })
@@ -145,8 +153,25 @@
       switchType (text) {
         this.editorMode = text
       },
-      // 刷新
-      refresh () {
+      // view刷新
+      viewRefresh () {
+        let diagram = this.diagram
+        // 获取流程图数据
+        this.$http.get('http://localhost:8080/static/json/faultTree.json').then((response) => {
+          if (response.status === 200) {
+            let jsonData = response.data.d
+            diagram = diagram.init(diagram, jsonData)
+            // 保存json数据到vuex
+            this.$store.commit('sourceCode', diagram.modelData())
+            // 更新json编辑器中的数据
+            this.Editor.update(jsonData)
+            // 保存实力对象到vuex
+            this.$store.commit('diagram', diagram)
+          }
+        })
+      },
+      // code刷新
+      codeRefresh () {
         this.Editor.set(this.code)
       },
       // 保存
@@ -154,6 +179,14 @@
         // 要保存的json(编辑器中的json)
         let code = this.Editor.get()
         console.log(code);
+      },
+      // 截图
+      screenshot() {
+        this.$store.commit('modal', {
+          title: '截图',
+          name: 'screenshot',
+          switch: true
+        })
       }
     }
   }

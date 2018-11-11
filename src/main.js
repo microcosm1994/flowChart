@@ -7,8 +7,9 @@ import element from 'element-ui'
 import cookies from 'vue-cookies'
 import {$axios} from './assets/js/interceptors'
 import store from '@/store/index'
-import diagrams from './assets/js/faultTree/index'
+import diagrams from './assets/js/faultTree/go/diagram'
 import jsoneditor from 'jsoneditor'
+import html2canvas from 'html2canvas'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'jsoneditor/dist/jsoneditor.min.css'
 import './assets/css/public.css'
@@ -19,6 +20,7 @@ Vue.prototype.$http = $axios
 Vue.prototype.$cookies = cookies
 Vue.prototype.$diagrams = diagrams
 Vue.prototype.$jsoneditor = jsoneditor
+Vue.prototype.$html2canvas = html2canvas
 Vue.config.productionTip = false
 
 // 登录检测

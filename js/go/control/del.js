@@ -6,7 +6,6 @@
 		// diagram.removeObj(diagram.selection.first());
 	};
 	function removeNodeAndOutLinks(o) {
-		// console.log(arguments);
 		diagram.model.removeNodeData(o.data);
 		let it = o.findTreeChildrenLinks();
 		let it2 = o.findTreeChildrenNodes();
