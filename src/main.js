@@ -34,8 +34,8 @@ router.beforeEach((to, from, next) => {
         message: '用户未登录',
         type: 'info'
       })
-      // next({path: '/login'})
-      next()
+      next({path: '/login'})
+      // next()
     }
   } else {
     next()

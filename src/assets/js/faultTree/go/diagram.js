@@ -2,6 +2,8 @@ import go from 'gojs'
 import template from './template'
 import contextMenu from './contextMenu'
 import cfg from './cfg'
+import $store from '../../../../store/index'
+
 const $ = go.GraphObject.make
 
 // 初始化流程图实例对象
@@ -27,19 +29,6 @@ function diagram (element) {
   // 创建流程图实例
   this.diagram = $(go.Diagram, element, this.options)
   cfg.contextMenu = contextMenu(this.diagram, cfg)
-  // 监听双击事件
-  this.diagram.addDiagramListener("ObjectDoubleClicked", function(e) {
-    dialog.set(e.subject.part)
-  })
-  // Ctrl-C
-  this.diagram.addDiagramListener("ClipboardChanged", function(e) {
-    self.copied = self.diagram.selection.first()
-  })
-  // Ctrl-V
-  go.CommandHandler.prototype.pasteSelection = function() {
-    self.diagram.copyTree(self.copied, self.diagram.selection.first())
-  }
-
   if (cfg.grid) {
     this.diagram.grid = $(go.Panel, 'Grid', {
       gridCellSize : new go.Size(50, 50)
@@ -52,6 +41,28 @@ function diagram (element) {
   // 合并this.diagram与this.__proto__
   /* this.diagram === this*/
   Object.assign(this.diagram, this.__proto__)
+  // 监听双击事件
+  this.diagram.addDiagramListener("ObjectDoubleClicked", function(e) {
+    let d = e.subject.part.data ? e.subject.part.data : e.subject.part;
+    if (d.key) {
+      // 更新当前节点信息到vuex
+      $store.commit('currentnNode', d)
+      // 打开弹框
+      $store.commit('modal', {
+        title: '编辑节点',
+        name: 'put',
+        switch: true
+      })
+    }
+  })
+  // Ctrl-C
+  this.diagram.addDiagramListener("ClipboardChanged", function(e) {
+    self.copied = self.diagram.selection.first()
+  })
+  // Ctrl-V
+  go.CommandHandler.prototype.pasteSelection = function() {
+    self.diagram.copyTree(self.copied, self.diagram.selection.first())
+  }
 }
 
 diagram.prototype = {
@@ -118,24 +129,39 @@ diagram.prototype = {
   totalScore: function (o) {
     o = o.data ? o.data : o;
     let w = this.weight;
-    o.score = o.score0 * w[0] / 100 + o.score1 * w[1] / 100 + o.score2 * w[2] / 100 + o.score3 * w[3] / 100;
+    o.score = o.score0 * w[0] + o.score1 * w[1] + o.score2 * w[2] + o.score3 * w[3];
+  },
+  addLink: function (src, dst) {
+    src = src.data ? src.data : src;
+    src = src.key ? src.key : src;
+    dst = dst.data ? dst.data : dst;
+    dst = dst.key ? dst.key : dst;
+    this.model.addLinkData({
+      'from' : src,
+      'to' : dst
+    });
   },
   cloneNodeData: function (src) {
     src = src.data ? src.data : src;
-    let ret = {}
+    let ret = {};
     for ( let n in src) {
-      ret[n] = src[n]
+      ret[n] = src[n];
     }
-    delete ret.__gohashid
-    this.model.makeNodeDataKeyUnique(ret)
+    delete ret.key;
+    delete ret.__gohashid;
+    this.model.makeNodeDataKeyUnique(ret);
     return ret;
   },
   copyNode: function (src, dst) {
+    let ret;
     if (src && dst) {
-      this.startTransaction('copyNode')
-      this.copyNode(src, dst)
-      this.commitTransaction('copyNode')
+      let copied = this.cloneNodeData(src)
+      // console.log(copied);
+      this.model.addNodeData(copied)
+      this.addLink(dst, copied)
+      ret = this.findNodeForKey(copied.key)
     }
+    return ret;
   },
   copyTree: function (src, p) {
     if (src && p) {

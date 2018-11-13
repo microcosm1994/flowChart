@@ -1,22 +1,28 @@
 <template>
   <el-form size="mini" status-icon :rules="rules" ref="ruleForm" :model="ruleForm" label-width="80px">
+    <el-form-item label="主键" prop="key">
+      <el-input v-model="ruleForm.key" disabled></el-input>
+    </el-form-item>
     <el-form-item label="标题" prop="title">
       <el-input v-model="ruleForm.title"></el-input>
     </el-form-item>
-    <el-form-item label="key" prop="key">
-      <el-input v-model="ruleForm.key"></el-input>
-    </el-form-item>
     <el-form-item label="选中" prop="selected">
-      <el-input v-model="ruleForm.selected"></el-input>
+      <el-radio-group v-model="ruleForm.selected">
+        <el-radio :label="1">是</el-radio>
+        <el-radio :label="0">否</el-radio>
+      </el-radio-group>
     </el-form-item>
     <el-form-item label="确认" prop="confirm">
-      <el-input v-model="ruleForm.confirm"></el-input>
+      <el-radio-group v-model="ruleForm.confirm">
+        <el-radio :label="1">是</el-radio>
+        <el-radio :label="0">否</el-radio>
+      </el-radio-group>
     </el-form-item>
-    <el-form-item label="备注" prop="remark">
-      <el-input v-model="ruleForm.remark"></el-input>
-    </el-form-item>
-    <el-form-item label="备注" prop="remark">
-      <el-input v-model="ruleForm.end"></el-input>
+    <el-form-item label="底层" prop="end">
+      <el-radio-group v-model="ruleForm.end">
+        <el-radio :label="1">是</el-radio>
+        <el-radio :label="0">否</el-radio>
+      </el-radio-group>
     </el-form-item>
     <el-form-item label="评分0" prop="score0">
       <el-input v-model="ruleForm.score0"></el-input>
@@ -29,6 +35,14 @@
     </el-form-item>
     <el-form-item label="评分3" prop="score3">
       <el-input v-model="ruleForm.score3"></el-input>
+    </el-form-item>
+    <el-form-item label="备注" prop="remark">
+      <el-input
+        type="textarea"
+        autosize
+        placeholder="请输入内容"
+        v-model="ruleForm.remark">
+      </el-input>
     </el-form-item>
     <el-form-item>
       <div style="text-align: center">
@@ -99,13 +113,9 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let diagram = this.diagram
-            let n = {}
-            for (let key in this.ruleForm) {
-              n[key] = this.ruleForm[key]
-            }
-            diagram.totalScore(n)
+            diagram.totalScore(this.ruleForm)
             // 更新节点
-            diagram.updateNodeByKey(n.key);
+            diagram.updateNodeByKey(this.ruleForm.key);
             // 保存json数据到vuex
             this.$store.commit('sourceCode', diagram.modelData())
             // 关闭弹框

@@ -8,7 +8,6 @@ $axios.interceptors.request.use(
   config => {
     // 获取存在cookie中的token
     let t = cookies.get('t')
-    t = 1
     // 如果是登录的接口就跳过
     if (config.url === '/api/user/login') {
       return config

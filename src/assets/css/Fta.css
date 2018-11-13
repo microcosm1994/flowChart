@@ -1,0 +1,79 @@
+.el-tabs {
+  min-height: 90vh;
+}
+.el-tabs .el-tabs__header {
+  background: linear-gradient(to right, #05213A, #03182C);
+  border-bottom: 1px solid #2BBBFF;
+  margin: 0;
+}
+.el-tabs .el-tabs__header .el-tabs__nav-wrap::after {
+  background: #02272F;
+}
+.el-tabs .el-tabs__header .el-tabs__nav-wrap .el-tabs__nav {
+  border: none;
+}
+.el-tabs .el-tabs__header .el-tabs__nav-wrap .el-tabs__nav .el-tabs__active-bar {
+  background: #009688;
+}
+.el-tabs .el-tabs__header .el-tabs__item.is-active {
+  background: #009688;
+  border-bottom: 1px solid #009688;
+  color: #fff;
+}
+.el-tabs .el-tabs__header .el-tabs__item {
+  background: #19324C;
+  border-left: none;
+  color: #ccc;
+}
+.el-tabs .el-tabs__content .el-tab-pane .btn-box {
+  padding-top: 5px;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 50%;
+  text-align: right !important;
+  padding-right: 30px;
+}
+.el-tabs .el-tabs__content .el-tab-pane .btn-box .el-input-number .el-input-number__decrease,
+.el-tabs .el-tabs__content .el-tab-pane .btn-box .el-input-number .el-input-number__increase {
+  background: #009688;
+  color: #fff;
+}
+.el-tabs .el-tabs__content .el-tab-pane .btn-box .el-input-number .el-input .el-input__inner {
+  border: 1px solid #009688;
+}
+.el-tabs .el-tabs__content .el-tab-pane .jsoneditor {
+  border: none;
+}
+.el-tabs .el-tabs__content .el-tab-pane .jsoneditor .jsoneditor-menu {
+  background: #19324C;
+  border-bottom: 1px solid #009688;
+}
+.el-tabs .el-tabs__content .el-tab-pane .jsoneditor .jsoneditor-menu button {
+  cursor: pointer;
+}
+.el-tabs .el-tabs__content .el-tab-pane .jsoneditor .jsoneditor-navigation-bar {
+  background: #009688;
+  color: #fff;
+}
+.el-tabs .el-tabs__content .el-tab-pane .jsoneditor .jsoneditor-outer .jsoneditor-tree {
+  background: #19324C;
+}
+.el-tabs .el-tabs__content .el-tab-pane .jsoneditor .jsoneditor-outer .jsoneditor-tree .jsoneditor-tree-inner .jsoneditor-tree .jsoneditor-expandable td {
+  color: #6aaab5;
+}
+.el-tabs .el-tabs__content .el-tab-pane .jsoneditor .jsoneditor-outer .jsoneditor-tree .jsoneditor-tree-inner .jsoneditor-tree .jsoneditor-expandable .jsoneditor-readonly {
+  color: #ccc;
+}
+.el-tabs .el-tabs__content .el-tab-pane .jsoneditor .jsoneditor-outer .jsoneditor-tree .jsoneditor-tree-inner .jsoneditor-tree .jsoneditor-expandable .jsoneditor-value {
+  color: #ccc;
+}
+.el-tabs .el-tabs__content .el-tab-pane .jsoneditor .jsoneditor-outer .jsoneditor-text {
+  color: #f5f5f5;
+  background: #19324C;
+}
+.el-tabs .el-tabs__content .el-tab-pane .jsoneditor .jsoneditor-statusbar {
+  color: #f5f5f5;
+  background: #009688;
+}
+/*# sourceMappingURL=Fta.css.map */

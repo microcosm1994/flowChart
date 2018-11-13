@@ -1,26 +1,25 @@
 <template>
   <div class="login-box">
     <!--<h1>监测系统</h1>-->
-    <div class="login-title">MGZ 监测系统</div>
     <div class="login">
-      <div class="login-header">
-        登 录
-      </div>
-      <div class="login-form">
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm" size="small">
-          <el-form-item label="账号" prop="username">
-            <el-input type="text" v-model="ruleForm.username" auto-complete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="ruleForm.password" auto-complete="off" @keyup.native.13="submitForm('ruleForm')"></el-input>
-          </el-form-item>
-          <div class="rember">
-            <el-checkbox v-model="checked">记住账号</el-checkbox>
-          </div>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">登 录</el-button>
-          </el-form-item>
-        </el-form>
+      <div class="login-title">测控数传综合装备健康管理分系统</div>
+      <div class="login-box">
+        <div class="login-form">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm" size="small">
+            <el-form-item label="账号" prop="username">
+              <el-input type="text" v-model="ruleForm.username" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input type="password" v-model="ruleForm.password" auto-complete="off" @keyup.native.13="submitForm('ruleForm')"></el-input>
+            </el-form-item>
+            <div class="rember">
+              <el-checkbox v-model="checked">记住账号</el-checkbox>
+            </div>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm')">登 录</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
     </div>
   </div>

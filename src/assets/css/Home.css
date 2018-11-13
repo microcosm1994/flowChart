@@ -5,6 +5,9 @@
 .el-container .el-header .el-menu .el-submenu {
   float: right;
 }
+.el-container .el-header .el-menu .is-active {
+  border-bottom: transparent !important;
+}
 .el-container .el-menu {
   height: 100%;
   border: none;
@@ -23,5 +26,6 @@
 }
 .el-container .el-main {
   padding: 0;
+  background: radial-gradient(circle, #19324C, #05213A);
 }
 /*# sourceMappingURL=Home.css.map */

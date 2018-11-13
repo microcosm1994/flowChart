@@ -6,17 +6,23 @@
     <el-form-item label="key">
       <el-input v-model="ruleForm.key" disabled></el-input>
     </el-form-item>
-    <el-form-item label="选中">
-      <el-input v-model="ruleForm.selected" disabled></el-input>
+    <el-form-item label="选中" prop="selected">
+      <el-radio-group v-model="ruleForm.selected">
+        <el-radio :label="1">是</el-radio>
+        <el-radio :label="0">否</el-radio>
+      </el-radio-group>
     </el-form-item>
-    <el-form-item label="确认">
-      <el-input v-model="ruleForm.confirm" disabled></el-input>
+    <el-form-item label="确认" prop="confirm">
+      <el-radio-group v-model="ruleForm.confirm">
+        <el-radio :label="1">是</el-radio>
+        <el-radio :label="0">否</el-radio>
+      </el-radio-group>
     </el-form-item>
-    <el-form-item label="备注">
-      <el-input v-model="ruleForm.remark" disabled></el-input>
-    </el-form-item>
-    <el-form-item label="备注">
-      <el-input v-model="ruleForm.end" disabled></el-input>
+    <el-form-item label="底层" prop="end">
+      <el-radio-group v-model="ruleForm.end">
+        <el-radio :label="1">是</el-radio>
+        <el-radio :label="0">否</el-radio>
+      </el-radio-group>
     </el-form-item>
     <el-form-item label="评分0">
       <el-input v-model="ruleForm.score0" disabled></el-input>
@@ -29,6 +35,14 @@
     </el-form-item>
     <el-form-item label="评分3">
       <el-input v-model="ruleForm.score3" disabled></el-input>
+    </el-form-item>
+    <el-form-item label="备注" prop="remark">
+      <el-input
+        type="textarea"
+        autosize
+        placeholder="请输入内容"
+        v-model="ruleForm.remark">
+      </el-input>
     </el-form-item>
     <el-form-item>
       <div style="text-align: center">

@@ -25,3 +25,32 @@ li{
 *导航样式
 */
 
+/**
+*按钮样式
+*/
+.el-button--primary{
+  background: #009688;
+  border:none;
+  &:hover{
+    background: #009688;
+    opacity: 0.7;
+  }
+  &:active, &:focus{
+    background: #009688;
+    opacity: 1;
+  }
+}
+/**
+*复选框
+*/
+.el-checkbox__input.is-checked+.el-checkbox__label{
+  color: #119D90;
+}
+.el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+  background: #119D90;
+  border-color:#119D90;
+}
+/* json编辑器 */
+.jsoneditor-schema-error, div.jsoneditor td, div.jsoneditor textarea, div.jsoneditor th, div.jsoneditor-field, div.jsoneditor-value{
+  color:#6aaab5;
+}

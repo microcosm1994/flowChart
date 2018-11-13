@@ -14,12 +14,12 @@ module.exports = {
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     proxyTable: {
-      '/api': {
+      '/9001': {
         target: 'http://ftaApi:9001',
         changeOrigin: true,
         emulateJSON: true,
         pathRewrite: {
-          '^/api': ''
+          '^/9001': ''
         }
       }
     },

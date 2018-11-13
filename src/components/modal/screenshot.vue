@@ -1,7 +1,6 @@
 <template>
   <div class="imageWrapper" ref="imageWrapper">
     <img style="width: 100%;height: 300px;" class="real_pic" :src="dataURL" />
-    <slot></slot>
   </div>
 </template>
 
@@ -18,12 +17,17 @@
     },
     methods: {
       toImage () {
+        let self = this
         setTimeout(this.$html2canvas(this.$refs.imageWrapper,{
           backgroundColor: null,
-          allowTaint: true
+          width: '100%',
+          height: 300,
+          windowWidth: '100%',
+          windowHeight: 300
         }).then((canvas) => {
+          document.body.appendChild(canvas)
           let dataURL = canvas.toDataURL("image/png")
-          this.dataURL = dataURL
+          self.dataURL = dataURL
         }), 0)
       }
     }
