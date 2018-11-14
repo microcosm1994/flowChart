@@ -36,8 +36,8 @@
         ruleForm: {
           from: '',
           to: '',
-          weight: 1.0,
-          order: 0
+          weight: '',
+          order: ''
         },
         rules: {
           from: [

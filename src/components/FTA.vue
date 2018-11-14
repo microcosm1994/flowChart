@@ -5,9 +5,9 @@
         <el-button @click="viewRefresh" icon="el-icon-refresh" size="mini" type="primary">刷新</el-button>
         <el-button @click="save" size="mini" type="primary">保存</el-button>
         <el-button @click="weight" size="mini" type="primary">权重</el-button>
-        <el-button size="mini" type="primary">新建</el-button>
+        <el-button @click="rootNode" size="mini" type="primary">新建</el-button>
         <el-button @click="screenshot" size="mini" type="primary">截图</el-button>
-        <el-input-number size="mini" v-model="viewSize" @change="handleChange" :min="0" :max="100" :step="10" label="%"></el-input-number>
+        <el-input-number size="mini" v-model="viewSize" @change="handleChange"  :min="1" :step="1" label="%"></el-input-number>
         <el-button icon="el-icon-info" size="mini" type="primary">帮助</el-button>
       </div>
       <div id="faultTree" :style="{width: '100%', height: height + 'px', 'margin-top': '10px',}"></div>
@@ -53,6 +53,7 @@
   import remove from './modal/remove'
   import screenshot from './modal/screenshot'
   import weight from './modal/weight'
+  import rootNode from './modal/rootNode'
   export default {
     name: 'FTA',
     data () {
@@ -96,7 +97,8 @@
       get,
       remove,
       screenshot,
-      weight
+      weight,
+      rootNode
     },
     mounted () {
       this.init()
@@ -104,8 +106,8 @@
     methods: {
       // 设置高度
       setHeight (h) {
-        const windowHeight = document.body.clientHeight;
-        return windowHeight - h - 0;
+        const windowHeight = document.body.clientHeight
+        return windowHeight - h - 0
       },
       // 初始化流程图
       init () {
@@ -113,15 +115,15 @@
         //http://localhost:8081/static/json/faultTree.json
         this.$http.get('/9001/tree/load').then((response) => {
           if (response.status === 200) {
-            let jsonData = response.data.d;
+            let jsonData = response.data.d
             // 创建流程图实例
             let diagram = new this.$diagrams('faultTree').diagram;
             // 初始化流程图
-            diagram = diagram.init(diagram, jsonData);
+            diagram = diagram.init(diagram, jsonData)
             // 保存json数据到vuex
             this.$store.commit('sourceCode', diagram.modelData());
             // Json编辑器
-            this.editor(this.sourceCode, this.editorMode);
+            this.editor(this.sourceCode, this.editorMode)
             // 保存实力对象到vuex
             this.diagram = diagram;
             this.$store.commit('diagram', diagram)
@@ -150,12 +152,12 @@
         // 获取流程图数据
         this.$http.post('/9001/tree/load').then((response) => {
           if (response.status === 200) {
-            let jsonData = response.data.d;
+            let jsonData = response.data.d
             diagram = diagram.init(diagram, jsonData);
             // 保存json数据到vuex
-            this.$store.commit('sourceCode', diagram.modelData());
+            this.$store.commit('sourceCode', diagram.modelData())
             // 更新json编辑器中的数据
-            this.Editor.update(jsonData);
+            this.Editor.update(jsonData)
             // 保存实力对象到vuex
             this.$store.commit('diagram', diagram)
           }
@@ -168,22 +170,24 @@
       // 保存
       save () {
         // 要保存的json(编辑器中的json)
-        let code = this.Editor.get();
+        let code = this.Editor.get()
+        // 删除数据中的updateTime和createTime
+        for (let key in code) {
+          if (Object.keys(code[key]).length > 0) {
+            for (let i = 0; i < code[key].length; i++) {
+              let item = code[key][i]
+              delete item.createTime
+              delete item.updateTime
+            }
+          }
+        }
         console.log(code);
-        this.$http.get('api/tree/save').then((response) => {
+        this.$http.post('api/tree/save', code).then((response) => {
           if (response.status === 200) {
-            let jsonData = response.data.d;
-            // 创建流程图实例
-            let diagram = new this.$diagrams('faultTree').diagram;
-            // 初始化流程图
-            diagram = diagram.init(diagram, jsonData);
-            // 保存json数据到vuex
-            this.$store.commit('sourceCode', diagram.modelData());
-            // Json编辑器
-            this.editor(this.sourceCode, this.editorMode);
-            // 保存实力对象到vuex
-            this.diagram = diagram;
-            this.$store.commit('diagram', diagram)
+            this.$message({
+              message: '数据保存成功',
+              type: 'success'
+            });
           }
         })
       },
@@ -195,14 +199,32 @@
           switch: true
         })
       },
-      weight(){
-          this.$store.commit("modal",{
+      // 权重
+      weight() {
+            this.$store.commit("modal",{
             title:"权重",
             name:"weight",
             switch:true
           })
       },
+      // 新建根节点
+      rootNode() {
+          this.$store.commit("modal",{
+          title:'新建根节点',
+          name:'rootNode',
+          switch:true
+        })
+      },
+      //
       handleChange(value) {
+        let diagram = this.diagram;
+        diagram.onmousewheel = function () {
+          alert(value);
+        }
+
+        diagram.scale = value;
+        diagram.allowZoom = false;
+        diagram.allowHorizontalScroll = true;
         console.log(value);
       }
     }

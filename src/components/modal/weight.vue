@@ -1,19 +1,19 @@
 <template>
   <el-form size="mini" status-icon :rules="rules" ref="ruleForm" :model="ruleForm" label-width="80px">
-    <el-form-item label="编号" prop="title">
-      <el-input v-model="ruleForm.from"></el-input>
-    </el-form-item>
+    <!--<el-form-item label="编号" prop="id">-->
+      <!--<el-input v-model.number="ruleForm.id" disabled></el-input>-->
+    <!--</el-form-item>-->
     <el-form-item label="权重0" prop="weight0">
-      <el-input v-model="ruleForm.to"></el-input>
+      <el-input v-model.number="ruleForm.weight0"></el-input>
     </el-form-item>
     <el-form-item label="权重1" prop="weight1">
-      <el-input v-model="ruleForm.weight"></el-input>
+      <el-input v-model.number="ruleForm.weight1"></el-input>
     </el-form-item>
     <el-form-item label="权重2" prop="weight2">
-      <el-input v-model="ruleForm.order"></el-input>
+      <el-input v-model.number="ruleForm.weight2"></el-input>
     </el-form-item>
     <el-form-item label="权重3" prop="weight3">
-      <el-input v-model="ruleForm.order"></el-input>
+      <el-input v-model.number="ruleForm.weight3"></el-input>
     </el-form-item>
     <el-form-item>
       <div style="text-align: center">
@@ -26,28 +26,24 @@
 
 <script>
     export default {
-        name: "weight",
+      name: 'weight',
       data () {
         let check = (rule, value, callback) => {
           if (value !== 0 && !value) {
             return callback(new Error('此项数据不能为空'));
           } else {
-            callback()
+            callback();
           }
         };
         return {
           ruleForm: {
-            title:'',
+            // id:'',
             weight0:'',
             weight1:'',
             weight2:'',
             weight3:'',
-
           },
           rules: {
-            title: [
-              { validator: check, trigger: 'blur' }
-            ],
             weight0: [
               { validator: check, trigger: 'blur' }
             ],
@@ -68,22 +64,25 @@
           return this.$store.state.diagram
         },
         // 当前节点信息
-        currentnNode: function () {
-          return this.$store.state.currentnNode
+        weight: function () {
+          return this.$store.state.weight
         }
       },
       mounted () {
-        // this.ruleForm.from = this.currentnNode.key;
-        // this.ruleForm.to = this.currentnNode.key
+        for (let i = 0; i < this.weight.length; i++) {
+          this.ruleForm['weight' + i] = this.weight[i]
+        }
       },
       methods: {
         // 提交表单
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              let diagram = this.diagram;
-              // 添加新节点
-              this.addLink(this.ruleForm);
+              this.$http.post('/9001/fta/weight/put', this.ruleForm).then((response) => {
+                if (response.status === 200) {
+                  console.log(this.ruleForm);
+                }
+              });
               // 关闭弹框
               this.resetForm()
             } else {
@@ -106,7 +105,6 @@
       }
     }
 </script>
-
 
 <style scoped>
 

@@ -1,0 +1,18 @@
+<div class="form-group">
+	<label for="id" class="col-md-2 control-label">日志编号:</label>
+	<div class="col-sm-9">
+		<input class="form-control" id="id" placeholder="请输入日志编号" value="" type="text" disabled="disabled" />
+	</div>
+</div>
+<div class="form-group">
+	<label for="score" class="col-md-2 control-label">分值:</label>
+	<div class="col-sm-9">
+		<input class="form-control" id="score" placeholder="请输入分值" value="" type="text" />
+	</div>
+</div>
+<div class="form-group">
+	<label for="color" class="col-md-2 control-label">颜色:</label>
+	<div class="col-sm-9">
+		<input class="form-control" id="color" placeholder="请输入颜色" value="" type="text" />
+	</div>
+</div>

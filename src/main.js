@@ -16,12 +16,12 @@ import './assets/css/public.css'
 import './assets/css/icon/iconfont.css'
 
 Vue.use(element)
-Vue.prototype.$http = $axios
-Vue.prototype.$cookies = cookies
-Vue.prototype.$diagrams = diagrams
-Vue.prototype.$jsoneditor = jsoneditor
-Vue.prototype.$html2canvas = html2canvas
-Vue.config.productionTip = false
+Vue.prototype.$http = $axios;
+Vue.prototype.$cookies = cookies;
+Vue.prototype.$diagrams = diagrams;
+Vue.prototype.$jsoneditor = jsoneditor;
+Vue.prototype.$html2canvas = html2canvas;
+Vue.config.productionTip = false;
 
 // 登录检测
 router.beforeEach((to, from, next) => {

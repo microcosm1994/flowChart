@@ -132,7 +132,7 @@
           from : parent.key,
           to : children.key,
           uid: parent.uid,
-          weight:parent.weight,
+          weight: 1,
           order: 1,
           createTime: '',
           updateTime: Date.now(),

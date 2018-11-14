@@ -54,3 +54,44 @@ li{
 .jsoneditor-schema-error, div.jsoneditor td, div.jsoneditor textarea, div.jsoneditor th, div.jsoneditor-field, div.jsoneditor-value{
   color:#6aaab5;
 }
+/* 表格样式 */
+.el-table th, .el-table tr{
+  background: transparent;
+}
+.el-table thead.is-group th{ // 多级表头
+  background: transparent;
+}
+//.el-pagination--small .arrow.disabled, .el-table .hidden-columns, .el-table td.is-hidden>*, .el-table th.is-hidden>*, .el-table--hidden{
+//  visibility: visible;
+//}
+.el-table{
+  color:#fff;
+  background: transparent;
+  margin-top: 10px;
+  thead{
+    color:#fff;
+    tr{
+      background: linear-gradient(to right, #009688, #009688);
+    }
+  }
+}
+.el-table--enable-row-hover .el-table__body tr:hover>td{
+  background: rgba(255, 255, 255, 0.3);
+}
+.el-table__body tr.hover-row>td{
+  background: rgba(255, 255, 255, 0.3);
+}
+.el-table__body tr.current-row>td{
+  background: rgba(255,255,255,0.3);
+}
+.el-table__body tr.hover-row.current-row>td{
+  background: rgba(255,255,255,0.3);
+}
+
+/* dialog 样式*/
+.el-dialog{
+  border-radius: 5px;
+  .el-dialog__header{
+    border-bottom: 1px solid #009688;
+  }
+}

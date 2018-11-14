@@ -55,6 +55,21 @@ function diagram (element) {
       })
     }
   })
+  // 删除
+  go.CommandHandler.prototype.deleteSelection = function() {
+    let o = self.diagram.selection.first()
+    let d = o.part.data ? o.part.data : o;
+    if (d.key) {
+      // 更新当前节点信息到vuex
+      $store.commit('currentnNode', d)
+      // 打开弹框
+      $store.commit('modal', {
+        title: '确认删除此节点？',
+        name: 'remove',
+        switch: true
+      })
+    }
+  }
   // Ctrl-C
   this.diagram.addDiagramListener("ClipboardChanged", function(e) {
     self.copied = self.diagram.selection.first()
@@ -90,6 +105,10 @@ diagram.prototype = {
   prepareModel: function (data) {
     this.weight = data.weight;
     this.colors = data.colors;
+    // 保存权重到vuex
+    $store.commit('weight', this.weight)
+    // 保存颜色
+    $store.commit('colors', this.colors)
     delete data.colors;
     delete data.weight;
     let a = data.nodeDataArray;
@@ -233,3 +252,4 @@ diagram.prototype = {
 }
 
 export default diagram
+

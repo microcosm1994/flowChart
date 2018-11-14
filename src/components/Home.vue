@@ -12,8 +12,8 @@
         :collapse-transition="false"
         :collapse="isCollapse">
         <el-menu-item index="0" route="/">
-          <i>
-            <img style="width: 45px;height: 45px;margin-left: -10px;margin-top: -15px" src="../assets/logo.png" alt="">
+          <i class="iconfont icon-Group">
+            <!--<img style="width: 45px;height: 45px;margin-left: -10px;margin-top: -15px" src="../assets/logo.png" alt="">-->
           </i>
           <span class="logo-title">故障树诊断</span>
         </el-menu-item>
@@ -45,7 +45,7 @@
             <span slot="title">项目列表</span>
           </el-menu-item>
         </el-submenu>
-        <el-menu-item index="3">
+        <el-menu-item index="3" route="/healthy">
           <i class="el-icon-document"></i>
           <span slot="title">综合健康体检</span>
         </el-menu-item>
