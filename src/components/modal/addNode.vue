@@ -76,29 +76,14 @@
         rules: {
           title: [
             { validator: check, trigger: 'blur' }
-          ],
-          score0: [
-            { validator: check, trigger: 'blur' }
-          ],
-          score1: [
-            { validator: check, trigger: 'blur' }
-          ],
-          score2: [
-            { validator: check, trigger: 'blur' }
-          ],
-          score3: [
-            { validator: check, trigger: 'blur' }
           ]
         }
       }
     },
     computed: {
-      diagram: function () {
-        return this.$store.state.diagram
-      },
       // 当前节点信息
-      currentnNode: function () {
-        return this.$store.state.currentnNode
+      modalData: function () {
+        return this.$store.state.modalData
       }
     },
     mounted () {},
@@ -107,10 +92,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            let diagram = this.diagram
-            diagram.totalScore(this.ruleForm)
-            // 添加新节点
-            this.addNode(this.currentnNode, this.ruleForm)
+            this.$control.addNode(this.modalData, this.ruleForm)
             // 关闭弹框
             this.resetForm()
           } else {
@@ -119,43 +101,12 @@
           }
         });
       },
-      // 添加节点
-      addNode (parent, children) {
-        let diagram = this.diagram
-        diagram.startTransaction('addNode start');
-        // 给新节点生成key
-        diagram.model.makeNodeDataKeyUnique(children);
-        // 添加节点
-        diagram.model.addNodeData(children);
-        // 与父节点建立连接
-        diagram.model.addLinkData({
-          from : parent.key,
-          to : children.key,
-          uid: parent.uid,
-          weight: 1,
-          order: 1,
-          createTime: '',
-          updateTime: Date.now(),
-          deleted: 0
-        });
-        // 更新节点
-        diagram.updateNodeByKey(this.currentnNode.key);
-        diagram.commitTransaction('addNode commit');
-        // 更新实例对象到vuex
-        this.$store.commit('diagram', diagram)
-        // 保存json数据到vuex
-        this.$store.commit('sourceCode', diagram.modelData())
-      },
       // 清除表单内容并关闭弹框
       resetForm() {
         // 重置data数据
         Object.assign(this.$data, this.$options.data())
         // 关闭弹框
-        this.$store.commit('modal', {
-          title: '添加节点',
-          name: 'addNode',
-          switch: false
-        })
+        this.$store.commit('modal', false)
       }
     }
   }

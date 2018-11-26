@@ -1,6 +1,9 @@
 <template>
   <div class="imageWrapper" ref="imageWrapper">
     <img style="width: 100%;height: 300px;" class="real_pic" :src="dataURL" />
+    <div style="text-align: center">
+      <el-button size="mini" type="primary" @click="submitForm()">保存</el-button>
+    </div>
   </div>
 </template>
 
@@ -9,7 +12,12 @@
     name: 'screenshot',
     data () {
       return {
-        dataURL: ''
+        dataURL : ''
+      }
+    },
+    computed: {
+      refs: function () {
+        return this.$store.state.refs
       }
     },
     mounted () {
@@ -18,17 +26,24 @@
     methods: {
       toImage () {
         let self = this
-        setTimeout(this.$html2canvas(this.$refs.imageWrapper,{
-          backgroundColor: null,
-          width: '100%',
-          height: 300,
-          windowWidth: '100%',
-          windowHeight: 300
+        this.$html2canvas(this.refs,{
+          backgroundColor: '#142E48',
+          canvas:null,
+          scale:window.devicePixelRatio,
+          useCORS:true,
+          async:false
         }).then((canvas) => {
-          document.body.appendChild(canvas)
           let dataURL = canvas.toDataURL("image/png")
           self.dataURL = dataURL
-        }), 0)
+        })
+      },
+      submitForm () {
+        let self = this
+        let a = document.createElement('a')
+        a.download = '故障树截图'
+        a.href = this.dataURL
+        let event = new MouseEvent('click')
+        a.dispatchEvent(event)
       }
     }
   }

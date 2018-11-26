@@ -36,8 +36,8 @@
         ruleForm: {
           from: '',
           to: '',
-          weight: '',
-          order: ''
+          weight: 1,
+          order: 1
         },
         rules: {
           from: [
@@ -56,26 +56,21 @@
       }
     },
     computed: {
-      diagram: function () {
-        return this.$store.state.diagram
-      },
       // 当前节点信息
-      currentnNode: function () {
-        return this.$store.state.currentnNode
+      modalData: function () {
+        return this.$store.state.modalData
       }
     },
     mounted () {
-      this.ruleForm.from = this.currentnNode.key
-      this.ruleForm.to = this.currentnNode.key
+      this.ruleForm.from = this.modalData.key
+      this.ruleForm.to = this.modalData.key
     },
     methods: {
       // 提交表单
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            let diagram = this.diagram
-            // 添加新节点
-            this.addLink(this.ruleForm)
+            this.$control.addLink(this.ruleForm)
             // 关闭弹框
             this.resetForm()
           } else {
@@ -84,30 +79,12 @@
           }
         });
       },
-      // 添加新连接
-      addLink (data) {
-        let diagram = this.diagram
-        diagram.startTransaction('addLink start');
-        // 建立新的连接
-        diagram.model.addLinkData(data);
-        // 更新
-        diagram.updateLinkByData(data)
-        diagram.commitTransaction('addLink commit');
-        // 更新实例对象到vuex
-        this.$store.commit('diagram', diagram)
-        // 保存json数据到vuex
-        this.$store.commit('sourceCode', diagram.modelData())
-      },
       // 清除表单内容并关闭弹框
       resetForm() {
         // 重置data数据
         Object.assign(this.$data, this.$options.data())
         // 关闭弹框
-        this.$store.commit('modal', {
-          title: '添加连接',
-          name: 'addLink',
-          switch: false
-        })
+        this.$store.commit('modal', false)
       }
     }
   }

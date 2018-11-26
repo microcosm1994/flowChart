@@ -2,12 +2,14 @@ import go from 'gojs'
 import template from './template'
 import contextMenu from './contextMenu'
 import cfg from './cfg'
-import $store from '../../../../store/index'
+import $store from '../../../store/index'
+import control from './control'
 
 const $ = go.GraphObject.make
+const co = new control()
 
 // 初始化流程图实例对象
-function diagram (element) {
+function diagram (element, edit) {
   let self = this
   this.element = element
   this.copied = null
@@ -24,11 +26,12 @@ function diagram (element) {
     allowCopy: cfg.editable,
     allowDelete: cfg.editable,
     // allowMove : true,
-    allowDrop: true
+    allowDrop: true,
+    //minScale:1,
+    maxScale:100,
   }
   // 创建流程图实例
   this.diagram = $(go.Diagram, element, this.options)
-  cfg.contextMenu = contextMenu(this.diagram, cfg)
   if (cfg.grid) {
     this.diagram.grid = $(go.Panel, 'Grid', {
       gridCellSize : new go.Size(50, 50)
@@ -41,42 +44,57 @@ function diagram (element) {
   // 合并this.diagram与this.__proto__
   /* this.diagram === this*/
   Object.assign(this.diagram, this.__proto__)
-  // 监听双击事件
-  this.diagram.addDiagramListener("ObjectDoubleClicked", function(e) {
-    let d = e.subject.part.data ? e.subject.part.data : e.subject.part;
-    if (d.key) {
-      // 更新当前节点信息到vuex
-      $store.commit('currentnNode', d)
-      // 打开弹框
-      $store.commit('modal', {
-        title: '编辑节点',
-        name: 'put',
-        switch: true
-      })
+  if (edit) {
+    cfg.contextMenu = contextMenu(this.diagram, cfg)
+    //监听鼠标滚轮事件
+    this.diagram.addDiagramListener("ViewportBoundsChanged",function (e) {
+      let scale = Math.round(e.subject.scale * 100)
+      if (scale > 1000) {
+        scale = 1000
+      }
+      $store.commit('scale', scale)
+    })
+    // 监听双击事件
+    this.diagram.addDiagramListener("ObjectDoubleClicked", function(e) {
+      let d = e.subject.part.data ? e.subject.part.data : e.subject.part;
+      // 节点
+      if (d.key) {
+        // 更新当前节点信息到vuex
+        $store.commit('modalData', d)
+        // 打开弹框
+        $store.commit('modal', true)
+        // 弹框信息
+        $store.commit('modalInfo', {
+          title: '编辑节点',
+          name: 'put'
+        })
+      }
+    })
+    // 删除
+    go.CommandHandler.prototype.deleteSelection = function() {
+      let o = self.diagram.selection.first()
+      let d = o.part.data ? o.part.data : o;
+      if (d.key) {
+        co.del(d)
+      }
+      // 连接
+      if (d.from) {
+        co.del(d)
+      }
     }
-  })
-  // 删除
-  go.CommandHandler.prototype.deleteSelection = function() {
-    let o = self.diagram.selection.first()
-    let d = o.part.data ? o.part.data : o;
-    if (d.key) {
-      // 更新当前节点信息到vuex
-      $store.commit('currentnNode', d)
-      // 打开弹框
-      $store.commit('modal', {
-        title: '确认删除此节点？',
-        name: 'remove',
-        switch: true
-      })
+    // Ctrl-C
+    this.diagram.addDiagramListener("ClipboardChanged", function(e) {
+      self.copied = self.diagram.selection.first()
+    })
+    // Ctrl-V
+    go.CommandHandler.prototype.pasteSelection = function(e) {
+      let copied = self.copied
+      self.diagram.copyTree(copied, self.diagram.selection.first())
+      self.copied = null
+      $store.commit('sourceCode', self.diagram.modelData())
     }
-  }
-  // Ctrl-C
-  this.diagram.addDiagramListener("ClipboardChanged", function(e) {
-    self.copied = self.diagram.selection.first()
-  })
-  // Ctrl-V
-  go.CommandHandler.prototype.pasteSelection = function() {
-    self.diagram.copyTree(self.copied, self.diagram.selection.first())
+  } else {
+    cfg.contextMenu = null
   }
 }
 
@@ -103,14 +121,16 @@ diagram.prototype = {
     return this
   },
   prepareModel: function (data) {
-    this.weight = data.weight;
-    this.colors = data.colors;
-    // 保存权重到vuex
-    $store.commit('weight', this.weight)
-    // 保存颜色
-    $store.commit('colors', this.colors)
+    this.config = data.config;
+    this.colors = data.colors
+    this.model.modelData.position = data.config.x + ' ' + data.config.y
+    this.weight = []
+    this.weight[0] = this.config.weight0
+    this.weight[1] = this.config.weight1
+    this.weight[2] = this.config.weight2
+    this.weight[3] = this.config.weight3
     delete data.colors;
-    delete data.weight;
+    delete data.config;
     let a = data.nodeDataArray;
     for (let i = 0; i < a.length; i++) {
       this.totalScore(a[i]);
@@ -119,13 +139,42 @@ diagram.prototype = {
   },
   // 源码（JSON）
   modelData: function () {
-    let o = JSON.parse(this.model.toJson());
-    delete o['class'];
+    let o = {
+      nodeDataArray: this.model.nodeDataArray,
+      linkDataArray: this.model.linkDataArray,
+    }
+    // 保存json数据到vuex
+    $store.commit('sourceCode', o);
     return o;
   },
   // 源码（字符串JSON）
   modelJson: function () {
     return JSON.stringify(this.modelData());
+  },
+  // 刷新视图
+  updateAllNodeDataByKey: function (modelData) {
+    let nodeDataArray = modelData.nodeDataArray
+    let linkDataArray = modelData.linkDataArray
+    for (let i = 0; i < nodeDataArray.length; i++) {
+      let d = nodeDataArray[i]
+      this.updateNodeByKey(d)
+      this.updateNodeDataByKey(d)
+    }
+    for (let i = 0; i < linkDataArray.length; i++) {
+      let d = linkDataArray[i]
+      this.updateLinkByData(d)
+    }
+  },
+  // 更新model数据
+  updateNodeDataByKey: function (o) {
+    let d = o.data ? o.data : o;
+    o = this.findNodeForKey(d.key);
+    for (let key in o.data) {
+      o.data[key] = d[key]
+    }
+    this.startTransaction("start set");
+    o.updateTargetBindings();
+    this.commitTransaction("end set");
   },
   // 更新节点
   updateNodeByKey: function(o) {
@@ -139,9 +188,10 @@ diagram.prototype = {
   // 更新连接
   updateLinkByData: function (o) {
     o = o.data ? o.data : o;
-    let n = this.findLinkForData(o);
+    o = o.key ? o.key : o;
+    o = this.findLinkForData(o);
     this.startTransaction("start set");
-    n.updateTargetBindings();
+    o.updateTargetBindings();
     this.commitTransaction("end set");
   },
   // 总分
@@ -149,16 +199,6 @@ diagram.prototype = {
     o = o.data ? o.data : o;
     let w = this.weight;
     o.score = o.score0 * w[0] + o.score1 * w[1] + o.score2 * w[2] + o.score3 * w[3];
-  },
-  addLink: function (src, dst) {
-    src = src.data ? src.data : src;
-    src = src.key ? src.key : src;
-    dst = dst.data ? dst.data : dst;
-    dst = dst.key ? dst.key : dst;
-    this.model.addLinkData({
-      'from' : src,
-      'to' : dst
-    });
   },
   cloneNodeData: function (src) {
     src = src.data ? src.data : src;
@@ -171,13 +211,26 @@ diagram.prototype = {
     this.model.makeNodeDataKeyUnique(ret);
     return ret;
   },
+  // 复制连接
+  copyLink (src, dst) {
+    src = src.data ? src.data : src;
+    src = src.key ? src.key : src;
+    dst = dst.data ? dst.data : dst;
+    dst = dst.key ? dst.key : dst;
+    this.model.addLinkData({
+      'from' : src,
+      'to' : dst,
+      'order' : 0,
+      'weight' : 1
+    });
+  },
   copyNode: function (src, dst) {
     let ret;
     if (src && dst) {
       let copied = this.cloneNodeData(src)
       // console.log(copied);
       this.model.addNodeData(copied)
-      this.addLink(dst, copied)
+      this.copyLink(dst, copied)
       ret = this.findNodeForKey(copied.key)
     }
     return ret;
@@ -225,7 +278,7 @@ diagram.prototype = {
       }
       // console.log(linkIn);
       this.removeNodeAndOutLinks(o);
-    } else if (d.to) {// is link
+    } else if (d.from) {// 移除连接
       this.model.removeLinkData(d);
     }
     this.commitTransaction('remove');

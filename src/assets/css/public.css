@@ -93,6 +93,13 @@ div.jsoneditor-value {
 .el-table thead tr {
   background: linear-gradient(to right, #009688, #009688);
 }
+.el-table th,
+.el-table tr {
+  background: #254465;
+}
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+  background: #28557d;
+}
 .el-table--enable-row-hover .el-table__body tr:hover > td {
   background: rgba(255, 255, 255, 0.3);
 }
@@ -107,9 +114,41 @@ div.jsoneditor-value {
 }
 /* dialog 样式*/
 .el-dialog {
+  min-width: 504px;
+  max-width: 624px;
   border-radius: 5px;
 }
 .el-dialog .el-dialog__header {
   border-bottom: 1px solid #009688;
+}
+/* 卡片样式 */
+.el-card {
+  background: linear-gradient(to right, #05213A, #03182C);
+}
+.el-card .el-card__header span {
+  color: #fff;
+}
+/* 滚动条 */
+.el-scrollbar__wrap {
+  z-index: 6;
+  overflow-x: hidden !important;
+  padding-bottom: 15px;
+}
+/* 下拉框样式 */
+.el-select {
+  width: 100%;
+}
+/* form表单 */
+.el-form {
+  width: 100%;
+}
+.el-form .el-form-item {
+  padding-right: 40px;
+}
+/* 左侧导航栏 */
+.el-menu-item,
+.el-submenu__title {
+  height: 46px !important;
+  line-height: 46px !important;
 }
 /*# sourceMappingURL=public.css.map */

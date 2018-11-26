@@ -26,6 +26,7 @@
 }
 .el-container .el-main {
   padding: 0;
+  min-width: 1000px;
   background: radial-gradient(circle, #19324C, #05213A);
 }
 /*# sourceMappingURL=Home.css.map */

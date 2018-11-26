@@ -1,10 +1,16 @@
 .el-tabs {
   min-height: 90vh;
+  padding-top: 40px;
+  box-sizing: border-box;
   //background: #19303E;
   .el-tabs__header {
+    width: 100%;
     background: linear-gradient(to right, #05213A, #03182C);
     border-bottom: 1px solid #2BBBFF;
     margin: 0;
+    position: fixed;
+    top: 60px;
+    z-index: 4;
     .el-tabs__nav-wrap {
       &::after {
         background: #02272F;
@@ -32,15 +38,24 @@
   }
   .el-tabs__content {
     .el-tab-pane {
+      border: 1px solid transparent;
       .btn-box {
+        height: 40px;
         padding-top: 5px;
+        box-sizing: border-box;
         position: fixed;
         top: 60px;
         right: 0;
-        width: 50%;
         text-align: right !important;
         padding-right: 30px;
+        z-index: 4;
         .el-input-number{
+          span.el-input-number__increase:after {
+            content: '%';
+            position: absolute;
+            margin-left: -42px;
+            color: black;
+          }
           .el-input-number__decrease, .el-input-number__increase{
             background: #009688;
             color:#fff;

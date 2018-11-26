@@ -1,6 +1,6 @@
 import go from 'gojs'
-import mt from '../mt/mt'
-import $store from '../../../../store/index'
+import mt from './mt/mt'
+import $store from '../../../store/index'
 
 const $ = go.GraphObject.make
 

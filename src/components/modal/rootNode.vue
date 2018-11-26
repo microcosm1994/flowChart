@@ -43,7 +43,7 @@
     </el-form-item>
     <el-form-item>
       <div style="text-align: center">
-        <el-button type="primary" @click="submitForm('ruleForm')">添加</el-button>
+        <el-button type="primary" data-submit="submit" @click="submitForm('ruleForm')">添加</el-button>
         <el-button @click="resetForm()">取消</el-button>
       </div>
     </el-form-item>
@@ -107,10 +107,8 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            let diagram = this.diagram
-            diagram.totalScore(this.ruleForm)
             // 添加新节点
-            this.addNode(this.currentnNode, this.ruleForm)
+            this.$control.addRootNode(this.ruleForm)
             // 关闭弹框
             this.resetForm()
           } else {
@@ -119,29 +117,12 @@
           }
         });
       },
-      // 添加节点
-      addNode (parent, children) {
-        let diagram = this.diagram
-        diagram.startTransaction('addNode start');
-        // 给新节点生成key
-        diagram.model.makeNodeDataKeyUnique(children);
-        // 添加节点
-        diagram.model.addNodeData(children);
-        // 更新实例对象到vuex
-        this.$store.commit('diagram', diagram)
-        // 保存json数据到vuex
-        this.$store.commit('sourceCode', diagram.modelData())
-      },
       // 清除表单内容并关闭弹框
       resetForm() {
         // 重置data数据
         Object.assign(this.$data, this.$options.data())
         // 关闭弹框
-        this.$store.commit('modal', {
-          title: '添加节点',
-          name: 'addNode',
-          switch: false
-        })
+        this.$store.commit('modal', false)
       }
     }
   }
