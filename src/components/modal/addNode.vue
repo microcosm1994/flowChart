@@ -3,24 +3,6 @@
     <el-form-item label="标题" prop="title">
       <el-input v-model="ruleForm.title"></el-input>
     </el-form-item>
-    <el-form-item label="选中" prop="selected">
-      <el-radio-group v-model="ruleForm.selected">
-        <el-radio :label="1">是</el-radio>
-        <el-radio :label="0">否</el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="确认" prop="confirm">
-      <el-radio-group v-model="ruleForm.confirm">
-        <el-radio :label="1">是</el-radio>
-        <el-radio :label="0">否</el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="底层" prop="end">
-      <el-radio-group v-model="ruleForm.end">
-        <el-radio :label="1">是</el-radio>
-        <el-radio :label="0">否</el-radio>
-      </el-radio-group>
-    </el-form-item>
     <el-form-item label="评分0" prop="score0">
       <el-input v-model="ruleForm.score0"></el-input>
     </el-form-item>
@@ -64,9 +46,6 @@
       return {
         ruleForm: {
           title: '',
-          selected: '',
-          confirm: '',
-          end: '',
           remark: '',
           score0: 0,
           score1: 0,

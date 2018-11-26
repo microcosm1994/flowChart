@@ -6,26 +6,6 @@
     <el-form-item label="标题" prop="title" title="标题">
       <el-input type="textarea" autosize placeholder="请输入内容" v-model="ruleForm.title" ref="title" maxLength="51"></el-input>
     </el-form-item>
-    <el-form-item label="选中" prop="selected" title="<是否>选中">
-      <el-radio-group v-model="ruleForm.selected">
-        <el-radio :label="1">是</el-radio>
-        <el-radio :label="0">否</el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="确认" prop="confirm" title="<是否弹出>确认">
-      <el-radio-group v-model="ruleForm.confirm">
-        <el-radio :label="1">是</el-radio>
-        <el-radio :label="0">否</el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="底层" prop="end" title="<是否>底层<节点>">
-      <el-select v-model="ruleForm.end" placeholder="请选择">
-        <el-option :value="0" title="up" label="上层节点"></el-option>
-        <el-option :value="1" title="api" label="需要请求外部接口得到分数"></el-option>
-        <el-option :value="2" title="count" label="根据统计得到分数"></el-option>
-        <el-option :value="3" title="function" label="根据概率函数得到分数"></el-option>
-      </el-select>
-    </el-form-item>
     <el-form-item label="评分0" prop="score0" title="评分0<概率>">
       <el-input v-model="ruleForm.score0" maxLength="22"></el-input>
     </el-form-item>
@@ -63,9 +43,6 @@
         ruleForm: {
           key: null,
           title: null,
-          selected: 1,
-          confirm: 0,
-          end: 0,
           score0: '0',
           score1: '0',
           score2: '0',

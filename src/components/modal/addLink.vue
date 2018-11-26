@@ -6,12 +6,6 @@
     <el-form-item label="目标" prop="selected">
       <el-input v-model="ruleForm.to"></el-input>
     </el-form-item>
-    <el-form-item label="权重" prop="confirm">
-      <el-input v-model="ruleForm.weight"></el-input>
-    </el-form-item>
-    <el-form-item label="排序" prop="leaf">
-      <el-input v-model="ruleForm.order"></el-input>
-    </el-form-item>
     <el-form-item>
       <div style="text-align: center">
         <el-button type="primary" @click="submitForm('ruleForm')">添加</el-button>
@@ -35,21 +29,13 @@
       return {
         ruleForm: {
           from: '',
-          to: '',
-          weight: 1,
-          order: 1
+          to: ''
         },
         rules: {
           from: [
             { validator: check, trigger: 'blur' }
           ],
           to: [
-            { validator: check, trigger: 'blur' }
-          ],
-          weight: [
-            { validator: check, trigger: 'blur' }
-          ],
-          order: [
             { validator: check, trigger: 'blur' }
           ]
         }
